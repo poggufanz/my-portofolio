@@ -3,7 +3,6 @@
 import { ExternalLink, Github, Calendar, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
-import Image from "next/image"
 
 export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
@@ -93,11 +92,9 @@ export default function Projects() {
               <div className="relative z-10">
                 {/* Project Image */}
                 <div className="mb-6 rounded-lg overflow-hidden">
-                  <Image
+                  <img
                     src={project.image}
                     alt={`${project.title} Screenshot`}
-                    width={800}
-                    height={400}
                     className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -136,12 +135,10 @@ export default function Hero() {
                     <div className="flip-card-front overflow-hidden bg-white border border-gray-200 relative">
                       {/* Photo area - 100% of card, full-width and full-height */}
                       <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
-                        <Image
+                        <img
                           src="/images/projects/image.png"
                           alt="Muhammad Faiq - Profile Photo"
-                          fill
-                          className="object-cover"
-                          priority
+                          className="w-full h-full object-cover"
                         />
 
                         {/* Name overlaid at the bottom */}
