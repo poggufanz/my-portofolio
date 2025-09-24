@@ -3,6 +3,7 @@
 import { ExternalLink, Github, Calendar, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect } from "react"
+import { getImagePath } from "@/lib/utils"
 
 export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
@@ -19,7 +20,7 @@ export default function Projects() {
       status: "In Development",
       gradient: "from-purple-500 to-pink-500",
       impact: "Enabling transparent governance",
-      image: "/images/projects/openvote.png",
+      image: getImagePath("/images/projects/openvote.png"),
     },
     {
       title: "MSME Management System",
@@ -31,7 +32,7 @@ export default function Projects() {
       status: "Completed",
       gradient: "from-blue-500 to-cyan-500",
       impact: "Improved efficiency by 25%",
-      image: "/images/projects/freelance_on_unpad.png",
+      image: getImagePath("/images/projects/freelance_on_unpad.png"),
     },
     {
       title: "Financial Reporting System",
@@ -43,7 +44,7 @@ export default function Projects() {
       status: "Completed",
       gradient: "from-green-500 to-emerald-500",
       impact: "Automated 5+ financial reports",
-      image: "/images/projects/internship.png",
+      image: getImagePath("/images/projects/internship.png"),
     },
   ]
 

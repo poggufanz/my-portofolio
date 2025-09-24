@@ -11,9 +11,9 @@ const nextConfig = {
   // Add trailing slash for better compatibility
   trailingSlash: true,
   
-  // No base path needed for standard GitHub Pages
-  basePath: '',
-  assetPrefix: '',
+  // Configure for GitHub Pages deployment with repository name
+  basePath: '/my-portofolio',
+  assetPrefix: '/my-portofolio',
 };
 
 export default nextConfig;

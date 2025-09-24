@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getImagePath } from "@/lib/utils"
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -136,7 +137,7 @@ export default function Hero() {
                       {/* Photo area - 100% of card, full-width and full-height */}
                       <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
                         <img
-                          src="/images/projects/image.png"
+                          src={getImagePath("/images/projects/image.png")}
                           alt="Muhammad Faiq - Profile Photo"
                           className="w-full h-full object-cover"
                         />
