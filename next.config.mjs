@@ -11,9 +11,9 @@ const nextConfig = {
   // Add trailing slash for better compatibility
   trailingSlash: true,
   
-  // Handle asset prefix for GitHub Pages
-  basePath: process.env.NODE_ENV === 'production' ? '' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  // No base path needed for standard GitHub Pages
+  basePath: '',
+  assetPrefix: '',
 };
 
 export default nextConfig;
