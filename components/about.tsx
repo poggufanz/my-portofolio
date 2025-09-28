@@ -50,10 +50,6 @@ export default function About() {
                 optimizing inventory, and enabling collaboration among SMEs. Passionate about creating scalable,
                 impactful, and community-driven digital solutions.
               </p>
-              <p className="hover:text-foreground transition-colors duration-300">
-                Currently working as a Full Stack Developer at LMFEB UNPAD, where I develop Laravel-based applications
-                and create collaboration features for MSMEs.
-              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mt-8">
