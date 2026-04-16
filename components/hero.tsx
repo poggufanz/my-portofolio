@@ -91,7 +91,7 @@ export default function Hero() {
                 <h1 className="text-5xl md:text-7xl font-bold mb-4 text-white leading-[1.05] tracking-tight">
                   Muhammad
                   <br />
-                  <span className="text-shimmer bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-white via-gray-200 to-gray-500 bg-clip-text text-transparent selection:bg-white/20 selection:text-white">
                     Faiq
                   </span>
                 </h1>

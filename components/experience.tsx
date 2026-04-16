@@ -13,7 +13,7 @@ export default function Experience() {
       company: "SUNURTECH",
       companyType: "IT Consultant",
       location: "Bandung, West Java",
-      period: "November 2025 — Present",
+      period: "January 2026 — Present",
       isCurrent: true,
       project: "Manajemen Proyek",
       description: [
@@ -84,7 +84,7 @@ export default function Experience() {
   }, [])
 
   return (
-    <section id="experience" className="py-24 px-6 bg-card/20 relative overflow-hidden">
+    <section id="experience" className="py-24 px-6 bg-[oklch(0.06_0_0)] relative overflow-hidden">
       {/* Subtle background texture */}
       <div className="absolute inset-0 experience-bg-pattern opacity-[0.03] pointer-events-none" />
 
@@ -126,8 +126,10 @@ export default function Experience() {
 
                 {/* Card */}
                 <div
-                  className={`group bg-card rounded-xl border transition-all duration-300 hover:border-white/30 overflow-hidden ${
-                    exp.isCurrent ? "border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.04)]" : "border-white/10"
+                  className={`group rounded-xl border transition-all duration-300 hover:border-white/30 overflow-hidden ${
+                    exp.isCurrent
+                      ? "bg-[oklch(0.12_0_0)] border-white/25 shadow-[0_0_40px_rgba(255,255,255,0.05)]"
+                      : "bg-[oklch(0.10_0_0)] border-white/12"
                   }`}
                 >
                   {/* Top accent bar for current role */}
