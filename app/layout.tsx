@@ -13,8 +13,8 @@ const geistMono = localFont({
 })
 
 export const metadata = {
-  title: "Muhammad Faiq - Software Engineer",
-  description: "Tonight's the night",
+  title: "Muhammad Faiq — Full Stack Developer",
+  description: "Full Stack Developer at SUNURTECH. Software Engineering student at Telkom University. Building scalable web apps and exploring Web3, AI, and Blockchain.",
 }
 
 export default function RootLayout({

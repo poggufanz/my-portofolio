@@ -9,8 +9,10 @@ export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [scrollY, setScrollY] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
     }
@@ -32,11 +34,22 @@ export default function Hero() {
     nextSection?.scrollIntoView({ behavior: "smooth" })
   }
 
+  const focusTags = [
+    { label: "Laravel", color: "border-red-500/30 text-red-400/80" },
+    { label: "Vue.js", color: "border-green-500/30 text-green-400/80" },
+    { label: "PHP", color: "border-violet-500/30 text-violet-400/80" },
+    { label: "React", color: "border-cyan-500/30 text-cyan-400/80" },
+    { label: "Web3", color: "border-yellow-500/30 text-yellow-400/80" },
+    { label: "MySQL", color: "border-blue-500/30 text-blue-400/80" },
+    { label: "DevOps", color: "border-orange-500/30 text-orange-400/80" },
+  ]
+
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black">
       <div className="absolute inset-0 futuristic-grid opacity-30" />
 
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Animated ambient blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className="absolute w-96 h-96 bg-white/10 rounded-full blur-3xl float-animation interactive-blob"
           style={{
@@ -66,38 +79,46 @@ export default function Hero() {
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Information */}
-            <div className="space-y-8">
-              <div className="perspective-card group">
-                <h1 className="text-4xl md:text-6xl font-bold mb-2 text-balance text-white drop-shadow-2xl">
-                  Im,{" "}
-                  <span className="text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent text-shimmer">
-                      <br /> Muhammad Faiq 
-                  </span>
-                </h1>
-                <p className="text-lg md:text-xl text-gray-300 mb-6 text-pretty leading-relaxed drop-shadow-lg">
-                  Passionate about crafting scalable web applications and exploring the future of Web3 technology.
-                </p>
-                <div className="w-24 h-1 bg-gradient-to-r from-white to-gray-400 rounded-full" />
+            <div className={`space-y-8 transition-all duration-1000 ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}>
+              {/* Status badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm text-xs text-white/70 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                Available for collaboration
               </div>
 
-              {/* Contact Information */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 text-gray-300">
-                  <Mail className="h-5 w-5 text-white" />
+              <div className="perspective-card group">
+                <p className="text-sm font-mono text-white/50 uppercase tracking-[0.25em] mb-3">Full Stack Developer</p>
+                <h1 className="text-5xl md:text-7xl font-bold mb-4 text-white leading-[1.05] tracking-tight">
+                  Muhammad
+                  <br />
+                  <span className="text-shimmer bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+                    Faiq
+                  </span>
+                </h1>
+                <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-md">
+                  Building scalable web applications & exploring the frontier of AI, Web3, and Behavioral Science.
+                </p>
+                <div className="mt-4 w-16 h-0.5 bg-gradient-to-r from-white to-transparent rounded-full" />
+              </div>
+
+              {/* Contact info */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-3 text-sm text-gray-400">
+                  <Mail className="h-4 w-4 text-white/60" />
                   <span>mfaiq1205@gmail.com</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <span className="text-white">📍</span>
-                  <span>Bandung, Indonesia</span>
+                <div className="flex items-center gap-3 text-sm text-gray-400">
+                  <span className="text-white/60 text-base">📍</span>
+                  <span>Bandung, West Java, Indonesia</span>
                 </div>
               </div>
 
               {/* Social Links */}
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="perspective-card bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 hover:scale-110 transition-all duration-300"
+                  className="bg-white/5 backdrop-blur-sm border-white/20 text-white hover:bg-white/15 hover:border-white/40 hover:scale-105 transition-all duration-300 text-xs"
                   onClick={() => window.open("https://github.com/poggufanz", "_blank")}
                 >
                   <Github className="mr-2 h-4 w-4" />
@@ -106,7 +127,7 @@ export default function Hero() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="perspective-card bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 hover:scale-110 transition-all duration-300"
+                  className="bg-white/5 backdrop-blur-sm border-white/20 text-white hover:bg-white/15 hover:border-white/40 hover:scale-105 transition-all duration-300 text-xs"
                   onClick={() => window.open("https://www.linkedin.com/in/muhammad-faiq-1450832ab/", "_blank")}
                 >
                   <Linkedin className="mr-2 h-4 w-4" />
@@ -114,19 +135,22 @@ export default function Hero() {
                 </Button>
               </div>
 
-              {/* CTA Button */}
+              {/* CTA */}
               <Button
                 size="lg"
-                className="hover:scale-105 transition-all duration-300 bg-white text-black hover:bg-gray-200 border border-white/30"
+                className="hover:scale-105 transition-all duration-300 bg-white text-black hover:bg-gray-100 font-medium text-sm px-6"
                 onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <Mail className="mr-2 h-5 w-5" />
+                <Mail className="mr-2 h-4 w-4" />
                 Get In Touch
               </Button>
             </div>
 
-            {/* Right side - Flip Card Photo */}
-            <div className="flex flex-col items-center lg:items-end space-y-6">
+            {/* Right side */}
+            <div
+              className={`flex flex-col items-center lg:items-end space-y-8 transition-all duration-1000 delay-300 ${mounted ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+            >
+              {/* Flip card */}
               <div className="relative">
                 <div
                   className="flip-card w-64 h-80 md:w-72 md:h-96 cursor-pointer"
@@ -134,59 +158,53 @@ export default function Hero() {
                 >
                   <div className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}>
                     <div className="flip-card-front overflow-hidden bg-white border border-gray-200 relative">
-                      {/* Photo area - 100% of card, full-width and full-height */}
                       <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
                         <img
                           src={getImagePath("/images/projects/image.png")}
                           alt="Muhammad Faiq - Profile Photo"
                           className="w-full h-full object-cover"
                         />
-
-                        {/* Name overlaid at the bottom */}
-                        <div className="absolute bottom-4 left-0 right-0 p-3 md:p-4 bg-black/50 backdrop-blur-sm">
-                          <h2 className="text-lg md:text-xl font-bold text-white text-center tracking-wide drop-shadow-2xl">
+                        <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                          <h2 className="text-base font-medium text-white text-center tracking-wide">
                             "Tonight's the night"
                           </h2>
                         </div>
                       </div>
-
-                      <div className="absolute top-2 right-2 bg-black/50 rounded px-2 py-1">
-                        <span className="text-xs text-white font-normal">Click me</span>
+                      <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded px-2 py-1">
+                        <span className="text-[10px] text-white font-medium">Click me</span>
                       </div>
                     </div>
 
                     <div className="flip-card-back overflow-hidden bg-white border border-gray-200">
-                      <div className="h-full flex flex-col p-4 md:p-6">
-                        <h3 className="text-lg md:text-xl font-bold mb-4 text-center text-black">Details</h3>
-
-                        {/* Details in clean vertical layout with thin sans-serif */}
-                        <div className="space-y-3 font-sans text-sm md:text-base mb-6">
-                          <div className="flex justify-between items-center py-1">
-                            <span className="font-normal text-gray-600">ID:</span>
-                            <span className="text-black font-medium">SE-2025-0125</span>
+                      <div className="h-full flex flex-col p-5 md:p-6">
+                        <h3 className="text-base font-bold mb-4 text-center text-black tracking-wide">Developer Card</h3>
+                        <div className="space-y-2.5 font-sans text-sm mb-4">
+                          <div className="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span className="text-gray-500 text-xs">ID</span>
+                            <span className="text-black font-mono text-xs">SE-2025-0125</span>
+                          </div>
+                          <div className="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span className="text-gray-500 text-xs">Role</span>
+                            <span className="text-black font-medium text-xs">Full Stack Dev</span>
+                          </div>
+                          <div className="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span className="text-gray-500 text-xs">Company</span>
+                            <span className="text-black font-medium text-xs">SUNURTECH</span>
+                          </div>
+                          <div className="flex justify-between items-center py-1 border-b border-gray-100">
+                            <span className="text-gray-500 text-xs">Location</span>
+                            <span className="text-black font-medium text-xs">Bandung, ID</span>
                           </div>
                           <div className="flex justify-between items-center py-1">
-                            <span className="font-normal text-gray-600">Dept:</span>
-                            <span className="text-black font-medium">Engineering</span>
-                          </div>
-                          <div className="flex justify-between items-center py-1">
-                            <span className="font-normal text-gray-600">Location:</span>
-                            <span className="text-black font-medium">Bandung, ID</span>
-                          </div>
-                          <div className="flex justify-between items-center py-1">
-                            <span className="font-normal text-gray-600">Status:</span>
-                            <span className="text-green-600 font-medium">Active</span>
+                            <span className="text-gray-500 text-xs">Status</span>
+                            <span className="text-green-600 font-semibold text-xs flex items-center gap-1">
+                              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block" />
+                              Active
+                            </span>
                           </div>
                         </div>
-
-                        {/* Separator line */}
-                        <div className="w-full h-px bg-gray-200 mb-4"></div>
-
-                        {/* Description */}
-                        <div className="flex-1"></div>
-
                         <div className="absolute bottom-2 right-2 bg-gray-100 rounded px-2 py-1">
-                          <span className="text-xs text-gray-500 font-normal">Click to flip back</span>
+                          <span className="text-[10px] text-gray-400">Click to flip back</span>
                         </div>
                       </div>
                     </div>
@@ -194,26 +212,20 @@ export default function Hero() {
                 </div>
               </div>
 
-              <div className="space-y-4 w-full max-w-sm">
-                <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider text-center lg:text-left">
-                  FOCUS
+              {/* Tech stack tags */}
+              <div className="space-y-3 w-full max-w-sm">
+                <h3 className="text-[10px] font-mono font-medium text-gray-500 uppercase tracking-[0.3em] text-center lg:text-left">
+                  Tech Stack
                 </h3>
-                <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                  <span className="px-4 py-2 bg-gray-800 text-white text-sm rounded-full border border-gray-700 hover:bg-gray-700 transition-colors duration-200">
-                    Laravel
-                  </span>
-                  <span className="px-4 py-2 bg-gray-800 text-white text-sm rounded-full border border-gray-700 hover:bg-gray-700 transition-colors duration-200">
-                    PHP
-                  </span>
-                  <span className="px-4 py-2 bg-gray-800 text-white text-sm rounded-full border border-gray-700 hover:bg-gray-700 transition-colors duration-200">
-                    React
-                  </span>
-                  <span className="px-4 py-2 bg-gray-800 text-white text-sm rounded-full border border-gray-700 hover:bg-gray-700 transition-colors duration-200">
-                    Web3
-                  </span>
-                  <span className="px-4 py-2 bg-gray-800 text-white text-sm rounded-full border border-gray-700 hover:bg-gray-700 transition-colors duration-200">
-                    MySQL
-                  </span>
+                <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                  {focusTags.map((tag) => (
+                    <span
+                      key={tag.label}
+                      className={`px-3 py-1.5 bg-transparent text-xs rounded-full border font-medium hover:bg-white/5 transition-colors duration-200 ${tag.color}`}
+                    >
+                      {tag.label}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -224,9 +236,9 @@ export default function Hero() {
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <button
             onClick={scrollToNext}
-            className="animate-bounce text-white/70 hover:text-white transition-colors duration-300"
+            className="animate-bounce text-white/40 hover:text-white/70 transition-colors duration-300"
           >
-            <ChevronDown className="h-8 w-8" />
+            <ChevronDown className="h-7 w-7" />
           </button>
         </div>
       </div>
