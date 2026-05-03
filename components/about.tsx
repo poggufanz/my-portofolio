@@ -1,142 +1,147 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { Code2, Database, Globe, Zap, Brain, Server } from "lucide-react"
+import { useEffect, useState, useRef } from "react"
+import { Code2, Database, Globe, Zap, Brain, Server, GraduationCap, Building2, Trophy, Languages, MapPin } from "lucide-react"
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
+        if (entry.isIntersecting) setIsVisible(true)
       },
-      { threshold: 0.2 },
+      { threshold: 0.15 },
     )
-
-    const element = document.getElementById("about")
-    if (element) observer.observe(element)
-
+    if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
   }, [])
 
   const highlights = [
-    { icon: Code2, text: "Full-Stack Development", color: "text-blue-400", bg: "bg-blue-500/10" },
-    { icon: Database, text: "Database & Backend", color: "text-green-400", bg: "bg-green-500/10" },
-    { icon: Globe, text: "Web3 & Blockchain", color: "text-purple-400", bg: "bg-purple-500/10" },
-    { icon: Server, text: "DevOps & Deployment", color: "text-orange-400", bg: "bg-orange-500/10" },
-    { icon: Brain, text: "AI & Behavioral Science", color: "text-pink-400", bg: "bg-pink-500/10" },
-    { icon: Zap, text: "System Analysis", color: "text-yellow-400", bg: "bg-yellow-500/10" },
+    { icon: Code2, text: "Full-Stack Development", bg: "bg-[var(--neo-primary)]", textColor: "text-white" },
+    { icon: Database, text: "Database & Backend", bg: "bg-[var(--neo-mint)]", textColor: "text-[var(--neo-text)]" },
+    { icon: Globe, text: "Web3 & Blockchain", bg: "bg-[var(--neo-lavender)]", textColor: "text-[var(--neo-text)]" },
+    { icon: Server, text: "DevOps & Deployment", bg: "bg-[var(--neo-accent)]", textColor: "text-[var(--neo-text)]" },
+    { icon: Brain, text: "AI & Behavioral Science", bg: "bg-[var(--neo-pink)]", textColor: "text-[var(--neo-text)]" },
+    { icon: Zap, text: "System Analysis", bg: "bg-[var(--neo-secondary)]", textColor: "text-white" },
   ]
 
   const facts = [
-    { icon: "🎓", label: "Education", value: "Software Engineering — Telkom University (2025–2029)" },
-    { icon: "🏢", label: "Currently at", value: "SUNURTECH · IT Consultant · Full Stack Dev" },
-    { icon: "🌐", label: "Focus", value: "Web3, Blockchain (ICP), AI & Behavioral Science" },
-    { icon: "🏆", label: "Achievement", value: "World Computer Hacker League 2025 — Regional Round" },
-    { icon: "🗣️", label: "Languages", value: "Bahasa Indonesia (Native) · English (Working)" },
-    { icon: "📍", label: "Location", value: "Bandung, West Java, Indonesia" },
+    { icon: GraduationCap, label: "Education", value: "Software Engineering — Telkom University (2025–2029)" },
+    { icon: Building2, label: "Currently At", value: "SUNURTECH · IT Consultant · Full Stack Dev" },
+    { icon: Globe, label: "Focus", value: "Web3, Blockchain (ICP), AI & Behavioral Science" },
+    { icon: Trophy, label: "Achievement", value: "World Computer Hacker League 2025 — Regional Round" },
+    { icon: Languages, label: "Languages", value: "Bahasa Indonesia (Native) · English (Working)" },
+    { icon: MapPin, label: "Location", value: "Bandung, West Java, Indonesia" },
   ]
 
   return (
-    <section id="about" className="py-24 px-6 relative">
-      <div className="container mx-auto max-w-5xl">
-        {/* Header */}
+    <section
+      id="about"
+      ref={sectionRef}
+      className="py-24 px-6 relative bg-white border-t-[3px] border-b-[3px] border-[var(--neo-border)]"
+      style={{ scrollMarginTop: "4rem" }}
+    >
+      {/* Background pattern */}
+      <div className="absolute inset-0 neo-crosshatch pointer-events-none" />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Section header */}
         <div className="mb-16 text-center">
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground mb-3">Who I Am</p>
-          <h2 className="text-4xl font-bold text-balance">
-            About <span className="text-primary">Me</span>
+          <div className="inline-block">
+            <span className="neo-tag bg-[var(--neo-accent)] mb-4">Who I Am</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold mt-4 text-[var(--neo-text)]">
+            About{" "}
+            <span
+              className="text-[var(--neo-primary)]"
+              style={{ textShadow: "2px 2px 0px var(--neo-accent)" }}
+            >
+              Me
+            </span>
           </h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-10 items-start">
           {/* Left — Bio + highlights */}
           <div
-            className={`transition-all duration-1000 ${
-              isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
+            className={`transition-[transform,opacity] duration-700 ease-out ${
+              isVisible ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
             }`}
           >
-            <div className="space-y-4 text-muted-foreground leading-relaxed text-[15px] mb-8">
-              <p className="hover:text-foreground transition-colors duration-300">
-                I'm an Undergraduate Software Engineering student at{" "}
-                <span className="text-white font-medium">Telkom University</span> and a Full Stack Developer
-                currently working at{" "}
-                <span className="text-white font-medium">SUNURTECH</span>, an IT consulting company in Bandung.
-                I build practical, scalable web solutions that directly impact real business operations.
-              </p>
-              <p className="hover:text-foreground transition-colors duration-300">
-                My technical core is <span className="text-white/80">full-stack development</span> with
-                Vue.js, Laravel, and PHP, backed by strong SQL and DevOps fundamentals. I've delivered
-                systems for MSMEs, accounting firms, and enterprise clients — turning raw data into
-                actionable insights.
-              </p>
-              <p className="hover:text-foreground transition-colors duration-300">
-                Beyond code, I actively explore the intersection of{" "}
-                <span className="text-white/80">AI, Web3, and Behavioral Science</span> — bridging complex
-                backend logic with human psychology to build smarter digital ecosystems. Currently deep in
-                Blockchain (ICP) and decentralized governance systems.
-              </p>
+            <div className="neo-card p-6 md:p-8 bg-[var(--neo-bg-alt)] mb-8">
+              <div className="space-y-4 text-[var(--neo-text)]/80 leading-relaxed text-base">
+                <p>
+                  I'm an Undergraduate Software Engineering student at{" "}
+                  <strong className="text-[var(--neo-text)] font-bold">Telkom University</strong> and a
+                  Full Stack Developer currently working at{" "}
+                  <strong className="text-[var(--neo-text)] font-bold">SUNURTECH</strong>, an IT
+                  consulting company in Bandung. I build practical, scalable web solutions that
+                  directly impact real business operations.
+                </p>
+                <p>
+                  My technical core is{" "}
+                  <strong className="font-bold">full-stack development</strong> with Vue.js,
+                  Laravel, and PHP, backed by strong SQL and DevOps fundamentals. I've delivered
+                  systems for MSMEs, accounting firms, and enterprise clients — turning raw data
+                  into actionable insights.
+                </p>
+                <p>
+                  Beyond code, I actively explore the intersection of{" "}
+                  <strong className="font-bold">AI, Web3, and Behavioral Science</strong> —
+                  bridging complex backend logic with human psychology to build smarter digital
+                  ecosystems.
+                </p>
+              </div>
             </div>
 
             {/* Highlights grid */}
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-3">
               {highlights.map((item, index) => (
                 <div
                   key={index}
-                  className={`flex items-center gap-2.5 p-3 rounded-lg border border-white/5 ${item.bg} hover:border-white/15 transition-all duration-300 hover:scale-[1.02] cursor-default group`}
+                  className={`flex items-center gap-3 p-3.5 border-[3px] border-[var(--neo-border)] shadow-[var(--neo-shadow-sm)] ${item.bg} ${item.textColor} hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_var(--neo-border)] transition-[transform,box-shadow] duration-150 cursor-default`}
                 >
-                  <item.icon
-                    className={`h-4 w-4 shrink-0 ${item.color} group-hover:scale-110 transition-transform duration-300`}
-                  />
-                  <span className="text-xs font-medium text-white/70 group-hover:text-white/90 transition-colors">{item.text}</span>
+                  <item.icon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                  <span className="text-xs font-bold uppercase tracking-wide">{item.text}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — Quick facts card */}
+          {/* Right — Quick facts */}
           <div
-            className={`relative transition-all duration-1000 delay-300 ${
-              isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
+            className={`transition-[transform,opacity] duration-700 ease-out delay-200 ${
+              isVisible ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
             }`}
           >
-            <div className="bg-card rounded-xl border border-white/10 overflow-hidden hover:border-white/20 transition-all duration-300 group">
-              {/* Card top accent */}
-              <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-              <div className="p-6 md:p-7">
-                <h3 className="text-sm font-mono font-semibold text-white/80 mb-5 uppercase tracking-wider">
-                  Quick Facts
-                </h3>
-                <ul className="space-y-3.5">
-                  {facts.map((fact, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-3 group/item hover:translate-x-1 transition-transform duration-200 cursor-default"
-                    >
-                      <span className="text-base mt-0.5 shrink-0">{fact.icon}</span>
-                      <div>
-                        <p className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground mb-0.5">
-                          {fact.label}
-                        </p>
-                        <p className="text-sm text-white/80 group-hover/item:text-white transition-colors leading-snug">
-                          {fact.value}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className="neo-card p-6 md:p-8 bg-[var(--neo-lavender)]/20">
+              <h3 className="text-lg font-extrabold text-[var(--neo-text)] mb-6 uppercase tracking-wide flex items-center gap-2">
+                <span className="w-4 h-4 bg-[var(--neo-primary)] border-2 border-[var(--neo-border)] inline-block" aria-hidden="true" />
+                Quick Facts
+              </h3>
+              <ul className="space-y-4">
+                {facts.map((fact, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 group cursor-default"
+                  >
+                    <div className="w-9 h-9 flex items-center justify-center border-[2px] border-[var(--neo-border)] bg-white shadow-[2px_2px_0px_var(--neo-border)] shrink-0 group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-[1px_1px_0px_var(--neo-border)] transition-[transform,box-shadow] duration-150">
+                      <fact.icon className="h-4 w-4 text-[var(--neo-text)]" aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--neo-text)]/50 mb-0.5">
+                        {fact.label}
+                      </p>
+                      <p className="text-sm font-medium text-[var(--neo-text)] leading-snug">
+                        {fact.value}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            {/* Decorative blurs */}
-            <div className="absolute -top-6 -right-6 w-24 h-24 bg-white/5 rounded-full blur-2xl float-animation pointer-events-none" />
-            <div
-              className="absolute -bottom-6 -left-6 w-20 h-20 bg-white/3 rounded-full blur-xl float-animation pointer-events-none"
-              style={{ animationDelay: "2s" }}
-            />
           </div>
         </div>
       </div>

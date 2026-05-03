@@ -1,13 +1,12 @@
 "use client"
 
-import { ExternalLink, Github, Calendar, Tag } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useState, useEffect } from "react"
+import { Calendar, Tag } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
 import { getImagePath } from "@/lib/utils"
 
 export default function Projects() {
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
   const [visibleProjects, setVisibleProjects] = useState<number[]>([])
+  const projectRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const projects = [
     {
@@ -18,9 +17,12 @@ export default function Projects() {
       type: "Personal Project",
       period: "July 2025 — Present",
       status: "In Development",
-      gradient: "from-purple-500 to-pink-500",
+      statusBg: "bg-[var(--neo-secondary)]",
+      statusText: "text-white",
       impact: "Enabling transparent governance",
       image: getImagePath("/images/projects/openvote.png"),
+      cardBg: "bg-[var(--neo-lavender)]/15",
+      accentBg: "bg-[var(--neo-lavender)]",
     },
     {
       title: "MSME Management System",
@@ -30,9 +32,12 @@ export default function Projects() {
       type: "Professional Project",
       period: "July 2024 — December 2024",
       status: "Completed",
-      gradient: "from-blue-500 to-cyan-500",
+      statusBg: "bg-[var(--neo-mint)]",
+      statusText: "text-[var(--neo-text)]",
       impact: "Improved efficiency by 25%",
       image: getImagePath("/images/projects/freelance_on_unpad.png"),
+      cardBg: "bg-[var(--neo-mint)]/15",
+      accentBg: "bg-[var(--neo-mint)]",
     },
     {
       title: "Financial Reporting System",
@@ -42,123 +47,134 @@ export default function Projects() {
       type: "Internship Project",
       period: "October 2023 — March 2024",
       status: "Completed",
-      gradient: "from-green-500 to-emerald-500",
+      statusBg: "bg-[var(--neo-mint)]",
+      statusText: "text-[var(--neo-text)]",
       impact: "Automated 5+ financial reports",
       image: getImagePath("/images/projects/internship.png"),
+      cardBg: "bg-[var(--neo-accent)]/15",
+      accentBg: "bg-[var(--neo-accent)]",
     },
   ]
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+    const observers: IntersectionObserver[] = []
+
+    projectRefs.current.forEach((ref, index) => {
+      if (!ref) return
+      const observer = new IntersectionObserver(
+        ([entry]) => {
           if (entry.isIntersecting) {
-            const index = Number.parseInt(entry.target.getAttribute("data-index") || "0")
-            setVisibleProjects((prev) => [...prev, index])
+            setVisibleProjects((prev) => (prev.includes(index) ? prev : [...prev, index]))
           }
-        })
-      },
-      { threshold: 0.2 },
-    )
+        },
+        { threshold: 0.15 },
+      )
+      observer.observe(ref)
+      observers.push(observer)
+    })
 
-    const projectCards = document.querySelectorAll(".project-card")
-    projectCards.forEach((card) => observer.observe(card))
-
-    return () => observer.disconnect()
+    return () => observers.forEach((o) => o.disconnect())
   }, [])
 
   return (
-    <section id="projects" className="py-20 px-6 bg-card/20">
-      <div className="container mx-auto max-w-4xl">
-        <h2 className="text-4xl font-bold mb-12 text-center text-balance">
-          Featured <span className="text-primary glow-effect">Projects</span>
-        </h2>
+    <section
+      id="projects"
+      className="py-24 px-6 bg-white border-t-[3px] border-b-[3px] border-[var(--neo-border)] relative"
+      style={{ scrollMarginTop: "4rem" }}
+    >
+      {/* Background pattern */}
+      <div className="absolute inset-0 neo-dots pointer-events-none" />
 
-        <div className="space-y-8">
+      <div className="max-w-4xl mx-auto relative z-10">
+        {/* Section header */}
+        <div className="mb-16 text-center">
+          <div className="inline-block">
+            <span className="neo-tag bg-[var(--neo-pink)] text-[var(--neo-text)] mb-4">
+              Portfolio
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold mt-4 text-[var(--neo-text)]">
+            Featured{" "}
+            <span
+              className="text-[var(--neo-primary)]"
+              style={{ textShadow: "2px 2px 0px var(--neo-accent)" }}
+            >
+              Projects
+            </span>
+          </h2>
+        </div>
+
+        {/* Project cards */}
+        <div className="space-y-10">
           {projects.map((project, index) => (
             <div
               key={index}
-              data-index={index}
-              className={`project-card perspective-card bg-card p-8 rounded-lg border hover:border-primary/50 transition-all duration-500 group relative overflow-hidden ${
-                visibleProjects.includes(index) ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+              ref={(el) => { projectRefs.current[index] = el }}
+              className={`transition-[transform,opacity] duration-500 ease-out ${
+                visibleProjects.includes(index)
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-8 opacity-0"
               }`}
-              style={{ transitionDelay: `${index * 200}ms` }}
-              onMouseEnter={() => setHoveredProject(index)}
-              onMouseLeave={() => setHoveredProject(null)}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
-              <div
-                className={`absolute inset-0 bg-gradient-to-r ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-              />
-
-              <div className="relative z-10">
-                {/* Project Image */}
-                <div className="mb-6 rounded-lg overflow-hidden">
+              <div className={`neo-card overflow-hidden ${project.cardBg}`}>
+                {/* Project image */}
+                <div className="border-b-[3px] border-[var(--neo-border)] overflow-hidden">
                   <img
                     src={project.image}
-                    alt={`${project.title} Screenshot`}
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                    alt={`${project.title} — Project Screenshot`}
+                    className="w-full h-56 md:h-64 object-cover hover:scale-[1.02] transition-transform duration-300"
+                    width={800}
+                    height={256}
+                    loading="lazy"
                   />
                 </div>
 
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                  <div>
-                    <h3 className="text-2xl font-semibold text-primary mb-2 group-hover:glow-effect transition-all duration-300">
+                {/* Content */}
+                <div className="p-6 md:p-8">
+                  {/* Title row */}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+                    <h3 className="text-2xl font-extrabold text-[var(--neo-text)]">
                       {project.title}
                     </h3>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-                      <span className="flex items-center gap-1">
-                        <Tag className="h-3 w-3" />
-                        {project.type}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {project.period}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span
-                        className={`inline-block px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
-                          project.status === "Completed"
-                            ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                            : "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                        }`}
-                      >
+                    <div className="flex flex-wrap gap-2 shrink-0">
+                      <span className={`neo-tag ${project.statusBg} ${project.statusText} text-[10px]`}>
                         {project.status}
                       </span>
-                      <span className="text-xs text-muted-foreground bg-secondary/50 px-2 py-1 rounded">
-                        {project.impact}
-                      </span>
                     </div>
                   </div>
 
-                  <div className="flex gap-2 mt-4 md:mt-0">
-                    {/* <Button
-                      variant="outline"
-                      size="sm"
-                      className="hover:scale-105 transition-all duration-300 hover:bg-primary/10 bg-transparent"
-                    >
-                      <Github className="h-4 w-4 mr-2" />
-                      Code
-                    </Button> */}
-                  </div>
-                </div>
-
-                <p className="text-muted-foreground mb-6 leading-relaxed group-hover:text-foreground transition-colors duration-300">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, i) => (
-                    <span
-                      key={i}
-                      className={`px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm font-medium hover:scale-110 transition-all duration-300 cursor-pointer ${
-                        hoveredProject === index ? "animate-pulse" : ""
-                      }`}
-                      style={{ animationDelay: `${i * 100}ms` }}
-                    >
-                      {tech}
+                  {/* Meta */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="neo-tag bg-white text-xs">
+                      <Tag className="h-3 w-3 mr-1" aria-hidden="true" />
+                      {project.type}
                     </span>
-                  ))}
+                    <span className="neo-tag bg-white text-xs">
+                      <Calendar className="h-3 w-3 mr-1" aria-hidden="true" />
+                      {project.period}
+                    </span>
+                    <span className={`neo-tag ${project.accentBg} text-xs`}>
+                      {project.impact}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-[var(--neo-text)]/80 mb-6 leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Tech stack */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="neo-tag bg-[var(--neo-bg)] text-[var(--neo-text)] text-xs hover:bg-[var(--neo-accent)] transition-colors duration-150"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

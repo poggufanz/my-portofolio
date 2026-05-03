@@ -26,6 +26,8 @@ export default function Experience() {
         "Participated in daily standups and client-facing meetings per project schedule",
       ],
       tech: ["Laravel", "PHP", "MySQL", "Vue.js", "DevOps", "System Analysis"],
+      accentBg: "bg-[var(--neo-primary)]",
+      accentText: "text-white",
     },
     {
       title: "Full Stack Developer",
@@ -43,6 +45,8 @@ export default function Experience() {
         "Created collaboration features enabling MSMEs to connect and grow together",
       ],
       tech: ["Laravel", "PHP", "MySQL", "JavaScript", "Bootstrap"],
+      accentBg: "bg-[var(--neo-secondary)]",
+      accentText: "text-white",
     },
     {
       title: "Software Engineer Intern",
@@ -60,6 +64,8 @@ export default function Experience() {
         "Improved report preparation efficiency by 20% through process automation",
       ],
       tech: ["PHP", "MySQL", "JavaScript", "HTML/CSS"],
+      accentBg: "bg-[var(--neo-lavender)]",
+      accentText: "text-[var(--neo-text)]",
     },
   ]
 
@@ -74,7 +80,7 @@ export default function Experience() {
             setVisibleItems((prev) => (prev.includes(index) ? prev : [...prev, index]))
           }
         },
-        { threshold: 0.15 },
+        { threshold: 0.1 },
       )
       observer.observe(ref)
       observers.push(observer)
@@ -84,128 +90,111 @@ export default function Experience() {
   }, [])
 
   return (
-    <section id="experience" className="py-24 px-6 bg-[oklch(0.06_0_0)] relative overflow-hidden">
-      {/* Subtle background texture */}
-      <div className="absolute inset-0 experience-bg-pattern opacity-[0.03] pointer-events-none" />
+    <section
+      id="experience"
+      className="py-24 px-6 bg-[var(--neo-bg)] relative"
+      style={{ scrollMarginTop: "4rem" }}
+    >
+      {/* Background pattern */}
+      <div className="absolute inset-0 neo-grid-lines pointer-events-none" />
 
-      <div className="container mx-auto max-w-4xl relative">
+      <div className="max-w-4xl mx-auto relative z-10">
+        {/* Section header */}
         <div className="mb-16 text-center">
-          <p className="text-xs font-mono uppercase tracking-[0.3em] text-muted-foreground mb-3">Career Timeline</p>
-          <h2 className="text-4xl font-bold text-balance">
-            Professional <span className="text-primary">Experience</span>
+          <div className="inline-block">
+            <span className="neo-tag bg-[var(--neo-secondary)] text-white mb-4">Career Timeline</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold mt-4 text-[var(--neo-text)]">
+            Professional{" "}
+            <span
+              className="text-[var(--neo-primary)]"
+              style={{ textShadow: "2px 2px 0px var(--neo-accent)" }}
+            >
+              Experience
+            </span>
           </h2>
         </div>
 
-        <div className="relative">
-          {/* Vertical timeline line */}
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-white/30 via-white/10 to-transparent" />
-
-          <div className="space-y-10">
-            {experiences.map((exp, index) => (
-              <div
-                key={index}
-                ref={(el) => { itemRefs.current[index] = el }}
-                className={`relative pl-16 md:pl-20 transition-all duration-700 ${
-                  visibleItems.includes(index)
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0"
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                {/* Timeline dot */}
-                <div className="absolute left-4 md:left-6 top-5 -translate-x-1/2">
-                  {exp.isCurrent ? (
-                    <span className="relative flex h-4 w-4">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-50" />
-                      <span className="relative inline-flex rounded-full h-4 w-4 bg-white" />
-                    </span>
-                  ) : (
-                    <span className="block h-3 w-3 rounded-full bg-white/30 border border-white/50" />
-                  )}
+        {/* Experience cards — stacked layout */}
+        <div className="space-y-8">
+          {experiences.map((exp, index) => (
+            <div
+              key={index}
+              ref={(el) => { itemRefs.current[index] = el }}
+              className={`transition-[transform,opacity] duration-500 ease-out ${
+                visibleItems.includes(index)
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-8 opacity-0"
+              }`}
+              style={{ transitionDelay: `${index * 120}ms` }}
+            >
+              <div className="neo-card overflow-hidden">
+                {/* Colored header bar */}
+                <div className={`${exp.accentBg} ${exp.accentText} px-6 py-4 border-b-[3px] border-[var(--neo-border)]`}>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-lg font-extrabold">{exp.title}</h3>
+                      {exp.isCurrent && (
+                        <span className="neo-tag bg-[var(--neo-accent)] text-[var(--neo-text)] text-[10px]">
+                          <span className="w-1.5 h-1.5 bg-[var(--neo-text)] animate-pulse mr-1 inline-block" aria-hidden="true" />
+                          Current
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-sm font-bold opacity-90">{exp.company}</span>
+                  </div>
                 </div>
 
-                {/* Card */}
-                <div
-                  className={`group rounded-xl border transition-all duration-300 hover:border-white/30 overflow-hidden ${
-                    exp.isCurrent
-                      ? "bg-[oklch(0.12_0_0)] border-white/25 shadow-[0_0_40px_rgba(255,255,255,0.05)]"
-                      : "bg-[oklch(0.10_0_0)] border-white/12"
-                  }`}
-                >
-                  {/* Top accent bar for current role */}
-                  {exp.isCurrent && (
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-                  )}
+                {/* Content */}
+                <div className="p-6 md:p-8 bg-white">
+                  {/* Meta info */}
+                  <div className="flex flex-wrap gap-3 mb-5">
+                    <span className="neo-tag bg-white text-xs">
+                      <Building2 className="h-3 w-3 mr-1" aria-hidden="true" />
+                      {exp.companyType}
+                    </span>
+                    <span className="neo-tag bg-white text-xs">
+                      <MapPin className="h-3 w-3 mr-1" aria-hidden="true" />
+                      {exp.location}
+                    </span>
+                    <span className="neo-tag bg-white text-xs">
+                      <Calendar className="h-3 w-3 mr-1" aria-hidden="true" />
+                      {exp.period}
+                    </span>
+                    <span className="neo-tag bg-[var(--neo-bg)] text-xs">
+                      <Cpu className="h-3 w-3 mr-1" aria-hidden="true" />
+                      {exp.project}
+                    </span>
+                  </div>
 
-                  <div className="p-6 md:p-8">
-                    {/* Header */}
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-5">
-                      <div className="flex-1">
-                        <div className="flex flex-wrap items-center gap-2 mb-1">
-                          <h3 className="text-lg font-semibold text-white">{exp.title}</h3>
-                          {exp.isCurrent && (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white text-black">
-                              <span className="w-1.5 h-1.5 rounded-full bg-black inline-block animate-pulse" />
-                              Current
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-                          <span className="font-medium text-white/90">{exp.company}</span>
-                          <span className="flex items-center gap-1 text-muted-foreground">
-                            <Building2 className="h-3 w-3" />
-                            {exp.companyType}
-                          </span>
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
-                            {exp.location}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {exp.period}
-                          </span>
-                        </div>
-
-                        {/* Project badge */}
-                        <div className="mt-2">
-                          <span className="inline-flex items-center gap-1 text-xs text-muted-foreground bg-white/5 border border-white/10 px-2 py-0.5 rounded-md">
-                            <Cpu className="h-3 w-3" />
-                            {exp.project}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <ul className="space-y-1.5 mb-5">
-                      {exp.description.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground group-hover:text-muted-foreground/90">
-                          <span className="mt-1.5 block w-1 h-1 rounded-full bg-white/40 shrink-0" />
-                          <span className="leading-relaxed">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Tech stack */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {exp.tech.map((tech, i) => (
+                  {/* Description */}
+                  <ul className="space-y-2 mb-6">
+                    {exp.description.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-[var(--neo-text)]/80">
                         <span
-                          key={i}
-                          className="px-2.5 py-1 text-xs font-medium bg-white/5 border border-white/10 text-white/70 rounded-md hover:bg-white/10 hover:text-white transition-colors duration-200"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                          className="mt-1.5 block w-2 h-2 border-[2px] border-[var(--neo-border)] bg-[var(--neo-accent)] shrink-0"
+                          aria-hidden="true"
+                        />
+                        <span className="leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Tech stack */}
+                  <div className="flex flex-wrap gap-2">
+                    {exp.tech.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="neo-tag bg-[var(--neo-bg)] text-[var(--neo-text)] text-xs"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
