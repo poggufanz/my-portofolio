@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, Tag } from "lucide-react"
+import { Calendar, Tag, Github } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 import { getImagePath } from "@/lib/utils"
 
@@ -23,6 +23,7 @@ export default function Projects() {
       image: getImagePath("/images/projects/openvote.png"),
       cardBg: "bg-[var(--neo-lavender)]/15",
       accentBg: "bg-[var(--neo-lavender)]",
+      github: "https://github.com/poggufanz/dao-tools",
     },
     {
       title: "MSME Management System",
@@ -38,6 +39,7 @@ export default function Projects() {
       image: getImagePath("/images/projects/freelance_on_unpad.png"),
       cardBg: "bg-[var(--neo-mint)]/15",
       accentBg: "bg-[var(--neo-mint)]",
+      github: "https://sipeci.gitbook.io/",
     },
     {
       title: "Financial Reporting System",
@@ -53,6 +55,7 @@ export default function Projects() {
       image: getImagePath("/images/projects/internship.png"),
       cardBg: "bg-[var(--neo-accent)]/15",
       accentBg: "bg-[var(--neo-accent)]",
+      github: "https://github.com/poggufanz/project-akuntan",
     },
   ]
 
@@ -110,11 +113,10 @@ export default function Projects() {
             <div
               key={index}
               ref={(el) => { projectRefs.current[index] = el }}
-              className={`transition-[transform,opacity] duration-500 ease-out ${
-                visibleProjects.includes(index)
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-8 opacity-0"
-              }`}
+              className={`transition-[transform,opacity] duration-500 ease-out ${visibleProjects.includes(index)
+                ? "translate-y-0 opacity-100"
+                : "translate-y-8 opacity-0"
+                }`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className={`neo-card overflow-hidden ${project.cardBg}`}>
@@ -164,16 +166,29 @@ export default function Projects() {
                     {project.description}
                   </p>
 
-                  {/* Tech stack */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="neo-tag bg-[var(--neo-bg)] text-[var(--neo-text)] text-xs hover:bg-[var(--neo-accent)] transition-colors duration-150"
+                  {/* Tech stack + GitHub button */}
+                  <div className="flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech, i) => (
+                        <span
+                          key={i}
+                          className="neo-tag bg-[var(--neo-bg)] text-[var(--neo-text)] text-xs hover:bg-[var(--neo-accent)] transition-colors duration-150"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-wide bg-[var(--neo-text)] text-white border-[3px] border-[var(--neo-border)] shadow-[var(--neo-shadow-sm)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_var(--neo-border)] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-[transform,box-shadow] duration-150 shrink-0"
                       >
-                        {tech}
-                      </span>
-                    ))}
+                        <Github className="h-4 w-4" aria-hidden="true" />
+                        View Code
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
