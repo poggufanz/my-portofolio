@@ -23,14 +23,14 @@ export default function About() {
     { icon: Database, text: "Database & Backend", bg: "bg-[var(--neo-mint)]", textColor: "text-[var(--neo-text)]" },
     { icon: Globe, text: "Web3 & Blockchain", bg: "bg-[var(--neo-lavender)]", textColor: "text-[var(--neo-text)]" },
     { icon: Server, text: "DevOps & Deployment", bg: "bg-[var(--neo-accent)]", textColor: "text-[var(--neo-text)]" },
-    { icon: Brain, text: "AI & Behavioral Science", bg: "bg-[var(--neo-pink)]", textColor: "text-[var(--neo-text)]" },
+    { icon: Brain, text: "AI & Machine Learning", bg: "bg-[var(--neo-pink)]", textColor: "text-[var(--neo-text)]" },
     { icon: Zap, text: "System Analysis", bg: "bg-[var(--neo-secondary)]", textColor: "text-white" },
   ]
 
   const facts = [
-    { icon: GraduationCap, label: "Education", value: "Software Engineering — Telkom University (2025–2029)" },
+    { icon: GraduationCap, label: "Education", value: "Software Engineering, Telkom University (2025–2029)" },
     { icon: Building2, label: "Currently At", value: "SUNURTECH · IT Consultant · Full Stack Dev" },
-    { icon: Globe, label: "Focus", value: "Web3, Blockchain (ICP), AI & Behavioral Science" },
+    { icon: Globe, label: "Focus", value: "Web3, Blockchain, AI" },
     { icon: Trophy, label: "Achievement", value: "World Computer Hacker League 2025 — Regional Round" },
     { icon: Languages, label: "Languages", value: "Bahasa Indonesia (Native) · English (Working)" },
     { icon: MapPin, label: "Location", value: "Bandung, West Java, Indonesia" },
@@ -84,14 +84,15 @@ export default function About() {
                   My technical core is{" "}
                   <strong className="font-bold">full-stack development</strong> with Vue.js,
                   Laravel, and PHP, backed by strong SQL and DevOps fundamentals. I've delivered
-                  systems for MSMEs, accounting firms, and enterprise clients — turning raw data
+                  systems for MSMEs, accounting firms, and enterprise clients turning raw data
                   into actionable insights.
                 </p>
                 <p>
                   Beyond code, I actively explore the intersection of{" "}
-                  <strong className="font-bold">AI, Web3, and Behavioral Science</strong> —
-                  bridging complex backend logic with human psychology to build smarter digital
-                  ecosystems.
+                  <strong className="font-bold">AI, Web3, and Blockchain</strong>
+                  . Experimenting with decentralized applications and smart contracts to stay ahead of
+                  the curve in emerging tech. I'm passionate about leveraging technology to solve
+                  real-world problems and am always eager to collaborate on innovative projects.
                 </p>
               </div>
             </div>

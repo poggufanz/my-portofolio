@@ -97,7 +97,7 @@ export default function Hero() {
                 </span>
               </h1>
               <p className="text-lg md:text-xl mt-4 leading-relaxed max-w-lg text-[var(--neo-text)]/80 font-medium">
-                Building scalable web applications &amp; exploring the frontier of AI, Web3, and Behavioral Science.
+                Building scalable web applications &amp; exploring the frontier of AI, Web3, and Blockchain.
               </p>
             </div>
 
