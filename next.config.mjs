@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   // Enable static exports for GitHub Pages
   output: 'export',
@@ -12,8 +14,9 @@ const nextConfig = {
   trailingSlash: true,
   
   // Configure for GitHub Pages deployment with repository name
-  basePath: '/my-portofolio',
-  assetPrefix: '/my-portofolio',
+  // (only in production builds; dev server stays at /)
+  basePath: isProd ? '/my-portofolio' : undefined,
+  assetPrefix: isProd ? '/my-portofolio' : undefined,
 };
 
 export default nextConfig;

@@ -1,22 +1,10 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
 import { Code2, Database, Globe, Zap, Brain, Server, GraduationCap, Building2, Trophy, Languages, MapPin } from "lucide-react"
+import { useNeoReveal } from "@/lib/use-neo-reveal"
 
 export default function About() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.15 },
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
+  const sectionRef = useNeoReveal<HTMLElement>({ stagger: 0.12 })
 
   const highlights = [
     { icon: Code2, text: "Full-Stack Development", bg: "bg-[var(--neo-primary)]", textColor: "text-white" },
@@ -29,10 +17,10 @@ export default function About() {
 
   const facts = [
     { icon: GraduationCap, label: "Education", value: "Software Engineering, Telkom University (2025–2029)" },
-    { icon: Building2, label: "Currently At", value: "SUNURTECH · IT Consultant · Full Stack Dev" },
+    { icon: Building2, label: "Currently At", value: "Anyar Retail · Retail Group · Full Stack Dev" },
     { icon: Globe, label: "Focus", value: "Web3, Blockchain, AI" },
     { icon: Trophy, label: "Achievement", value: "World Computer Hacker League 2025 — Regional Round" },
-    { icon: Languages, label: "Languages", value: "Bahasa Indonesia (Native) · English (Working)" },
+    { icon: Languages, label: "Languages", value: "Bahasa Indonesia (Native) · English (ECCT Certified)" },
     { icon: MapPin, label: "Location", value: "Bandung, West Java, Indonesia" },
   ]
 
@@ -48,7 +36,7 @@ export default function About() {
 
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Section header */}
-        <div className="mb-16 text-center">
+        <div className="mb-16 text-center" data-reveal>
           <div className="inline-block">
             <span className="neo-tag bg-[var(--neo-accent)] mb-4">Who I Am</span>
           </div>
@@ -65,34 +53,31 @@ export default function About() {
 
         <div className="grid md:grid-cols-2 gap-10 items-start">
           {/* Left — Bio + highlights */}
-          <div
-            className={`transition-[transform,opacity] duration-700 ease-out ${
-              isVisible ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
-            }`}
-          >
+          <div data-reveal>
             <div className="neo-card p-6 md:p-8 bg-[var(--neo-bg-alt)] mb-8">
               <div className="space-y-4 text-[var(--neo-text)]/80 leading-relaxed text-base">
                 <p>
                   I'm an Undergraduate Software Engineering student at{" "}
                   <strong className="text-[var(--neo-text)] font-bold">Telkom University</strong> and a
-                  Full Stack Developer currently working at{" "}
-                  <strong className="text-[var(--neo-text)] font-bold">SUNURTECH</strong>, an IT
-                  consulting company in Bandung. I build practical, scalable web solutions that
-                  directly impact real business operations.
+                  Full Stack Developer at{" "}
+                  <strong className="text-[var(--neo-text)] font-bold">PT Anyar Retail Indonesia</strong>{" "}
+                  (RKM, Triwarna, ABM). I build web apps that actually get used — not just demo
+                  projects — and lately I've been focused on systems that help MSMEs make sense of
+                  their financial data.
                 </p>
                 <p>
-                  My technical core is{" "}
-                  <strong className="font-bold">full-stack development</strong> with Vue.js,
-                  Laravel, and PHP, backed by strong SQL and DevOps fundamentals. I've delivered
-                  systems for MSMEs, accounting firms, and enterprise clients turning raw data
-                  into actionable insights.
+                  My stack leans on{" "}
+                  <strong className="font-bold">Vue.js and Laravel</strong>, backed by enough SQL to
+                  know when a query is doing something wrong. I've shipped systems for MSMEs,
+                  accounting firms, and enterprise clients end-to-end — turning messy transactional
+                  records into reports business owners can actually read and act on.
                 </p>
                 <p>
-                  Beyond code, I actively explore the intersection of{" "}
-                  <strong className="font-bold">AI, Web3, and Blockchain</strong>
-                  . Experimenting with decentralized applications and smart contracts to stay ahead of
-                  the curve in emerging tech. I'm passionate about leveraging technology to solve
-                  real-world problems and am always eager to collaborate on innovative projects.
+                  Beyond code, I'm digging into{" "}
+                  <strong className="font-bold">AI, Web3, and behavioral science</strong> — not as
+                  separate interests, but because the interesting problems sit at the intersection.
+                  Most systems are built as if users behave rationally. They don't. I want to build
+                  things that account for that.
                 </p>
               </div>
             </div>
@@ -112,11 +97,7 @@ export default function About() {
           </div>
 
           {/* Right — Quick facts */}
-          <div
-            className={`transition-[transform,opacity] duration-700 ease-out delay-200 ${
-              isVisible ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
-            }`}
-          >
+          <div data-reveal>
             <div className="neo-card p-6 md:p-8 bg-[var(--neo-lavender)]/20">
               <h3 className="text-lg font-extrabold text-[var(--neo-text)] mb-6 uppercase tracking-wide flex items-center gap-2">
                 <span className="w-4 h-4 bg-[var(--neo-primary)] border-2 border-[var(--neo-border)] inline-block" aria-hidden="true" />

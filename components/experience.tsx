@@ -1,23 +1,42 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
 import { MapPin, Calendar, Building2, Cpu } from "lucide-react"
+import { useNeoReveal } from "@/lib/use-neo-reveal"
 
 export default function Experience() {
-  const [visibleItems, setVisibleItems] = useState<number[]>([])
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([])
+  const sectionRef = useNeoReveal<HTMLElement>({ rotate: 1.2, y: 64 })
 
   const experiences = [
+    {
+      title: "Full Stack Developer",
+      company: "PT ANYAR RETAIL INDONESIA",
+      companyType: "Retail Group · RKM, Triwarna, ABM",
+      location: "Rancaekek, West Java",
+      period: "July 2026 — Present",
+      isCurrent: true,
+      project: "Business Operations Systems",
+      description: [
+        "Designing and developing web & mobile application solutions supporting business operations across the RKM, Triwarna, and ABM retail brands",
+        "Analyzing business requirements and developing technology solutions aligned with company goals",
+        "Implementing, testing, and maintaining the company's IT systems and applications",
+        "Collaborating with cross-functional teams to identify and resolve IT issues",
+        "Assisting in the development, improvement, and optimization of the company's IT infrastructure",
+        "Documenting IT processes and procedures to ensure operational continuity",
+      ],
+      tech: ["Web Development", "Mobile", "System Analysis", "DevOps", "IT Infrastructure"],
+      accentBg: "bg-[var(--neo-primary)]",
+      accentText: "text-white",
+    },
     {
       title: "Full Stack Developer",
       company: "SUNURTECH",
       companyType: "IT Consultant",
       location: "Bandung, West Java",
-      period: "January 2026 — Present",
-      isCurrent: true,
+      period: "January 2026 — July 2026",
+      isCurrent: false,
       project: "Manajemen Proyek",
       description: [
-        "Developing the 'Manajemen Proyek' platform end-to-end for an IT consulting company",
+        "Built the 'Manajemen Proyek' platform end-to-end for an IT consulting company",
         "Conducted system analysis to define functional & technical specifications aligned with client needs",
         "Wrote and developed program code per tasks assigned by the Team Leader / Project Manager",
         "Performed module integration and internal functional testing across the system",
@@ -26,7 +45,7 @@ export default function Experience() {
         "Participated in daily standups and client-facing meetings per project schedule",
       ],
       tech: ["Laravel", "PHP", "MySQL", "Vue.js", "DevOps", "System Analysis"],
-      accentBg: "bg-[var(--neo-primary)]",
+      accentBg: "bg-[var(--neo-secondary)]",
       accentText: "text-white",
     },
     {
@@ -45,8 +64,8 @@ export default function Experience() {
         "Created collaboration features enabling MSMEs to connect and grow together",
       ],
       tech: ["Laravel", "PHP", "MySQL", "JavaScript", "Bootstrap"],
-      accentBg: "bg-[var(--neo-secondary)]",
-      accentText: "text-white",
+      accentBg: "bg-[var(--neo-lavender)]",
+      accentText: "text-[var(--neo-text)]",
     },
     {
       title: "Software Engineer Intern",
@@ -64,43 +83,24 @@ export default function Experience() {
         "Improved report preparation efficiency by 20% through process automation",
       ],
       tech: ["PHP", "MySQL", "JavaScript", "HTML/CSS"],
-      accentBg: "bg-[var(--neo-lavender)]",
+      accentBg: "bg-[var(--neo-mint)]",
       accentText: "text-[var(--neo-text)]",
     },
   ]
 
-  useEffect(() => {
-    const observers: IntersectionObserver[] = []
-
-    itemRefs.current.forEach((ref, index) => {
-      if (!ref) return
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setVisibleItems((prev) => (prev.includes(index) ? prev : [...prev, index]))
-          }
-        },
-        { threshold: 0.1 },
-      )
-      observer.observe(ref)
-      observers.push(observer)
-    })
-
-    return () => observers.forEach((o) => o.disconnect())
-  }, [])
-
   return (
     <section
       id="experience"
+      ref={sectionRef}
       className="py-24 px-6 bg-[var(--neo-bg)] relative"
       style={{ scrollMarginTop: "4rem" }}
     >
       {/* Background pattern */}
       <div className="absolute inset-0 neo-grid-lines pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Section header */}
-        <div className="mb-16 text-center">
+        <div className="mb-16 text-center" data-reveal>
           <div className="inline-block">
             <span className="neo-tag bg-[var(--neo-secondary)] text-white mb-4">Career Timeline</span>
           </div>
@@ -118,16 +118,7 @@ export default function Experience() {
         {/* Experience cards — stacked layout */}
         <div className="space-y-8">
           {experiences.map((exp, index) => (
-            <div
-              key={index}
-              ref={(el) => { itemRefs.current[index] = el }}
-              className={`transition-[transform,opacity] duration-500 ease-out ${
-                visibleItems.includes(index)
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-8 opacity-0"
-              }`}
-              style={{ transitionDelay: `${index * 120}ms` }}
-            >
+            <div key={index} data-reveal>
               <div className="neo-card overflow-hidden">
                 {/* Colored header bar */}
                 <div className={`${exp.accentBg} ${exp.accentText} px-6 py-4 border-b-[3px] border-[var(--neo-border)]`}>

@@ -9,6 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 export function getImagePath(path: string): string {
   // In production (GitHub Pages), prefix with repository name
   // In development, use the path as-is
-  const basePath = '/my-portofolio';
+  const basePath = process.env.NODE_ENV === 'production' ? '/my-portofolio' : '';
   return `${basePath}${path}`
 }

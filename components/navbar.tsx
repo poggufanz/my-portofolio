@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Menu, X } from "lucide-react"
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap"
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -13,6 +14,7 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +24,35 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Slide nav away when scrolling down, snap back when scrolling up.
+  useGSAP(() => {
+    const mm = gsap.matchMedia()
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const nav = navRef.current
+      if (!nav) return
+
+      const show = gsap
+        .from(nav, { yPercent: -110, duration: 0.35, ease: "power3.out", paused: true })
+        .progress(1)
+
+      const st = ScrollTrigger.create({
+        start: "top top-=80",
+        onUpdate: (self) => {
+          if (self.direction === -1) show.play()
+          else show.reverse()
+        },
+      })
+
+      return () => {
+        st.kill()
+        show.kill()
+      }
+    })
+
+    return () => mm.revert()
+  })
+
   const scrollTo = (href: string) => {
     setIsOpen(false)
     const el = document.querySelector(href)
@@ -30,6 +61,7 @@ export default function Navbar() {
 
   return (
     <nav
+      ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color] duration-200 ${
         scrolled
           ? "bg-[var(--neo-bg)] border-b-[3px] border-[var(--neo-border)]"
